@@ -42,9 +42,7 @@ CREATE TABLE IF NOT EXISTS reservations (
   checkin_time TIMESTAMP NULL,
   checkout_time TIMESTAMP NULL,
   qr_code VARCHAR(100),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (seat_id) REFERENCES seats(id)
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS violation_records (
@@ -60,15 +58,12 @@ CREATE TABLE IF NOT EXISTS violation_records (
   end_time TIME NOT NULL,
   description VARCHAR(255),
   handled BOOLEAN DEFAULT FALSE,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (reservation_id) REFERENCES reservations(id),
-  FOREIGN KEY (seat_id) REFERENCES seats(id)
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_violation_user ON violation_records(user_id);
-CREATE INDEX idx_violation_time ON violation_records(violation_time);
-CREATE INDEX idx_violation_date ON violation_records(reservation_date);
+CREATE INDEX IF NOT EXISTS idx_violation_user ON violation_records(user_id);
+CREATE INDEX IF NOT EXISTS idx_violation_time ON violation_records(violation_time);
+CREATE INDEX IF NOT EXISTS idx_violation_date ON violation_records(reservation_date);
 
 INSERT INTO users (username, real_name, email, phone, role) VALUES
 ('admin', '系统管理员', 'admin@library.edu', '13800000000', 'ADMIN'),

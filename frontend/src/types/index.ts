@@ -30,3 +30,34 @@ export interface OverviewResponse {
   kpis: KpiItem[];
   records: OperationRecord[];
 }
+
+export interface ViolationRecord {
+  id: number;
+  userId: number;
+  userName: string;
+  reservationId: number;
+  seatId: number;
+  seatCode: string;
+  violationType: string;
+  violationTime: string;
+  reservationDate: string;
+  startTime: string;
+  endTime: string;
+  description: string;
+  handled: boolean;
+  createdAt: string;
+}
+
+export interface ViolationUserStats {
+  userId: number;
+  userName: string;
+  violationCount: number;
+}
+
+export interface PageResponse<T> {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  number: number;
+  size: number;
+}
